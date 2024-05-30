@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Lab_AttendanceManagement.Models
+namespace Lab_PRN231.Models
 {
     public class Teacher
     {
@@ -8,6 +8,6 @@ namespace Lab_AttendanceManagement.Models
         [Required]
         public string Name { get; set; }
         public bool Gender { get; set; }
-        public ICollection<Schedule>? Schedules { get; set; }
+        public ICollection<Schedule>? Schedules { get; set; }=new List<Schedule>();
     }
 }

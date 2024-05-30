@@ -1,4 +1,5 @@
-﻿using Lab_AttendanceManagement.Models;
+﻿using Lab_PRN231.DTOs;
+using Lab_PRN231.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace Lab_PRN231.Models
@@ -18,10 +19,34 @@ namespace Lab_PRN231.Models
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<StudentCourse>(entity =>
-                entity.HasKey(sc => new { sc.StudentId, sc.CourseId })
+            {
+                entity.HasKey(sc => new { sc.StudentId, sc.CourseId });
+
+                entity.HasOne(sc => sc.Student)
+                      .WithMany(s => s.StudentCourses)
+                      .HasForeignKey(sc => sc.StudentId);
+
+                entity.HasOne(sc => sc.Course)
+                      .WithMany(c => c.StudentCourses)
+                      .HasForeignKey(sc => sc.CourseId);
+            }
+
             );
             modelBuilder.Entity<StudentSchedule>(entity =>
-                entity.HasKey(sc => new { sc.StudentId, sc.ScheduleId })
+            {
+                entity.HasKey(ss => new { ss.StudentId, ss.ScheduleId });
+
+                entity.HasOne(ss => ss.Student)
+                      .WithMany(s => s.StudentSchedules)
+                      .HasForeignKey(sc => sc.StudentId);
+
+                entity.HasOne(sc => sc.Schedule)
+                      .WithMany(c => c.StudentSchedules)
+                      .HasForeignKey(sc => sc.ScheduleId);
+            }
+            );
+            modelBuilder.Entity<Subject>(entity =>
+                entity.HasKey(s => s.Code)
             );
             Seeding(modelBuilder);
         }

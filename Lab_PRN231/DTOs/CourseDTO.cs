@@ -1,5 +1,4 @@
-﻿using Lab_AttendanceManagement.Models;
-using System.ComponentModel.DataAnnotations;
+﻿
 
 namespace Lab_PRN231.DTOs
 {

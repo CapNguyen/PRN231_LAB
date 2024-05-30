@@ -22,7 +22,7 @@ namespace Lab_PRN231.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("Lab_AttendanceManagement.Models.Course", b =>
+            modelBuilder.Entity("Lab_PRN231.Models.Course", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -83,7 +83,7 @@ namespace Lab_PRN231.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Lab_AttendanceManagement.Models.Schedule", b =>
+            modelBuilder.Entity("Lab_PRN231.Models.Schedule", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -138,7 +138,7 @@ namespace Lab_PRN231.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Lab_AttendanceManagement.Models.Student", b =>
+            modelBuilder.Entity("Lab_PRN231.Models.Student", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -185,7 +185,7 @@ namespace Lab_PRN231.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Lab_AttendanceManagement.Models.StudentCourse", b =>
+            modelBuilder.Entity("Lab_PRN231.Models.StudentCourse", b =>
                 {
                     b.Property<int>("StudentId")
                         .HasColumnType("int");
@@ -262,7 +262,7 @@ namespace Lab_PRN231.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Lab_AttendanceManagement.Models.StudentSchedule", b =>
+            modelBuilder.Entity("Lab_PRN231.Models.StudentSchedule", b =>
                 {
                     b.Property<int>("StudentId")
                         .HasColumnType("int");
@@ -354,7 +354,7 @@ namespace Lab_PRN231.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Lab_AttendanceManagement.Models.Subject", b =>
+            modelBuilder.Entity("Lab_PRN231.Models.Subject", b =>
                 {
                     b.Property<string>("Code")
                         .HasColumnType("nvarchar(450)");
@@ -397,7 +397,7 @@ namespace Lab_PRN231.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Lab_AttendanceManagement.Models.Teacher", b =>
+            modelBuilder.Entity("Lab_PRN231.Models.Teacher", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -443,22 +443,22 @@ namespace Lab_PRN231.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Lab_AttendanceManagement.Models.Course", b =>
+            modelBuilder.Entity("Lab_PRN231.Models.Course", b =>
                 {
-                    b.HasOne("Lab_AttendanceManagement.Models.Subject", "Subject")
+                    b.HasOne("Lab_PRN231.Models.Subject", "Subject")
                         .WithMany()
                         .HasForeignKey("SubjectCode");
 
                     b.Navigation("Subject");
                 });
 
-            modelBuilder.Entity("Lab_AttendanceManagement.Models.Schedule", b =>
+            modelBuilder.Entity("Lab_PRN231.Models.Schedule", b =>
                 {
-                    b.HasOne("Lab_AttendanceManagement.Models.Course", "Course")
+                    b.HasOne("Lab_PRN231.Models.Course", "Course")
                         .WithMany()
                         .HasForeignKey("CourseId");
 
-                    b.HasOne("Lab_AttendanceManagement.Models.Teacher", "Teacher")
+                    b.HasOne("Lab_PRN231.Models.Teacher", "Teacher")
                         .WithMany("Schedules")
                         .HasForeignKey("TeacherId");
 
@@ -467,15 +467,15 @@ namespace Lab_PRN231.Migrations
                     b.Navigation("Teacher");
                 });
 
-            modelBuilder.Entity("Lab_AttendanceManagement.Models.StudentCourse", b =>
+            modelBuilder.Entity("Lab_PRN231.Models.StudentCourse", b =>
                 {
-                    b.HasOne("Lab_AttendanceManagement.Models.Course", "Course")
+                    b.HasOne("Lab_PRN231.Models.Course", "Course")
                         .WithMany("StudentCourses")
                         .HasForeignKey("CourseId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Lab_AttendanceManagement.Models.Student", "Student")
+                    b.HasOne("Lab_PRN231.Models.Student", "Student")
                         .WithMany("StudentCourses")
                         .HasForeignKey("StudentId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -486,16 +486,16 @@ namespace Lab_PRN231.Migrations
                     b.Navigation("Student");
                 });
 
-            modelBuilder.Entity("Lab_AttendanceManagement.Models.StudentSchedule", b =>
+            modelBuilder.Entity("Lab_PRN231.Models.StudentSchedule", b =>
                 {
-                    b.HasOne("Lab_AttendanceManagement.Models.Schedule", "Schedule")
+                    b.HasOne("Lab_PRN231.Models.Schedule", "Schedule")
                         .WithMany("StudentSchedules")
                         .HasForeignKey("ScheduleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Lab_AttendanceManagement.Models.Student", "Student")
-                        .WithMany()
+                    b.HasOne("Lab_PRN231.Models.Student", "Student")
+                        .WithMany("StudentSchedules")
                         .HasForeignKey("StudentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -505,22 +505,24 @@ namespace Lab_PRN231.Migrations
                     b.Navigation("Student");
                 });
 
-            modelBuilder.Entity("Lab_AttendanceManagement.Models.Course", b =>
+            modelBuilder.Entity("Lab_PRN231.Models.Course", b =>
                 {
                     b.Navigation("StudentCourses");
                 });
 
-            modelBuilder.Entity("Lab_AttendanceManagement.Models.Schedule", b =>
+            modelBuilder.Entity("Lab_PRN231.Models.Schedule", b =>
                 {
                     b.Navigation("StudentSchedules");
                 });
 
-            modelBuilder.Entity("Lab_AttendanceManagement.Models.Student", b =>
+            modelBuilder.Entity("Lab_PRN231.Models.Student", b =>
                 {
                     b.Navigation("StudentCourses");
+
+                    b.Navigation("StudentSchedules");
                 });
 
-            modelBuilder.Entity("Lab_AttendanceManagement.Models.Teacher", b =>
+            modelBuilder.Entity("Lab_PRN231.Models.Teacher", b =>
                 {
                     b.Navigation("Schedules");
                 });

@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
-namespace Lab_AttendanceManagement.Models
+namespace Lab_PRN231.Models
 {
     public class StudentSchedule
     {
@@ -15,6 +16,6 @@ namespace Lab_AttendanceManagement.Models
     {
         NotYet,
         Absent,
-        Attended
+        Attended 
     }
 }

@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Lab_AttendanceManagement.Models;
+using Lab_PRN231.Models;
 using Lab_PRN231.DTOs;
 
 namespace Lab_PRN231.Mappers
@@ -20,6 +20,22 @@ namespace Lab_PRN231.Mappers
             CreateMap<Teacher, TeacherDTO>();
             CreateMap<Subject, SubjectDTO>();
 
+            CreateMap<CourseDTO, Course>()
+                .ForMember(dest => dest.Id, opt => opt.Ignore())
+                .ForMember(dest => dest.Subject, opt =>
+                    opt.MapFrom(src => new Subject { Code = src.SubjectCode }));
+            CreateMap<ScheduleDTO, Schedule>()
+                .ForMember(dest => dest.Id, opt => opt.Ignore())
+                .ForMember(dest => dest.Course, opt =>
+                    opt.MapFrom(src => new Course { Id = (int)src.CourseId }))
+                .ForMember(dest => dest.Teacher, opt =>
+                    opt.MapFrom(src => new Teacher { Id = (int)src.TeacherId }));
+            CreateMap<StudentDTO, Student>()
+                .ForMember(dest => dest.Id, opt => opt.Ignore());
+            CreateMap<TeacherDTO, Teacher>()
+                .ForMember(dest => dest.Id, opt => opt.Ignore());
+            CreateMap<SubjectDTO, Subject>()
+                .ForMember(dest => dest.Code, opt => opt.Ignore());
         }
     }
 }

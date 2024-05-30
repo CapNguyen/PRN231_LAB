@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Lab_PRN231.Migrations
 {
     [DbContext(typeof(LabDBContext))]
-    [Migration("20240530074707_u3")]
-    partial class u3
+    [Migration("20240530133129_u4")]
+    partial class u4
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -497,7 +497,7 @@ namespace Lab_PRN231.Migrations
                         .IsRequired();
 
                     b.HasOne("Lab_PRN231.Models.Student", "Student")
-                        .WithMany()
+                        .WithMany("StudentSchedules")
                         .HasForeignKey("StudentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -520,6 +520,8 @@ namespace Lab_PRN231.Migrations
             modelBuilder.Entity("Lab_PRN231.Models.Student", b =>
                 {
                     b.Navigation("StudentCourses");
+
+                    b.Navigation("StudentSchedules");
                 });
 
             modelBuilder.Entity("Lab_PRN231.Models.Teacher", b =>
