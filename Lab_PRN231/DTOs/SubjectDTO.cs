@@ -1,13 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Lab_AttendanceManagement.Models
+namespace Lab_PRN231.DTOs
 {
-    public class Subject
+    public class SubjectDTO
     {
-        [Key]
         public string Code { get; set; }
-        [Required]
         public string Name { get; set; }
         public int? NumberOfSlot { get; set; }
     }
+}
 }
