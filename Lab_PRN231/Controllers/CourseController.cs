@@ -20,11 +20,12 @@ namespace Lab_PRN231.Controllers
         [HttpGet]
         [EnableQuery]
         [Route("All")]
-        public async Task<IActionResult> All()
+        public async Task<IActionResult> Index()
         {
             var courses = await services.All();
             return Ok(courses);
         }
+      
         [HttpGet("{id}")]
         public async Task<ActionResult<CourseDTO>> Get(int id)
         {

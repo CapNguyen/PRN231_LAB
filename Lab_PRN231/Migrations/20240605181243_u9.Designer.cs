@@ -4,6 +4,7 @@ using Lab_PRN231.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Lab_PRN231.Migrations
 {
     [DbContext(typeof(LabDBContext))]
-    partial class LabDBContextModelSnapshot : ModelSnapshot
+    [Migration("20240605181243_u9")]
+    partial class u9
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -34,7 +36,7 @@ namespace Lab_PRN231.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("EndDate")
+                    b.Property<DateTime?>("EndDate")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime>("StartDate")
@@ -112,11 +114,16 @@ namespace Lab_PRN231.Migrations
                     b.Property<int>("TeacherId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("TeacherId1")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CourseId");
 
                     b.HasIndex("TeacherId");
+
+                    b.HasIndex("TeacherId1");
 
                     b.ToTable("Schedules");
 
@@ -506,16 +513,20 @@ namespace Lab_PRN231.Migrations
             modelBuilder.Entity("Lab_PRN231.Models.Schedule", b =>
                 {
                     b.HasOne("Lab_PRN231.Models.Course", "Course")
-                        .WithMany("Schedules")
+                        .WithMany()
                         .HasForeignKey("CourseId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Lab_PRN231.Models.Teacher", "Teacher")
-                        .WithMany("Schedules")
+                        .WithMany()
                         .HasForeignKey("TeacherId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("Lab_PRN231.Models.Teacher", null)
+                        .WithMany("Schedules")
+                        .HasForeignKey("TeacherId1");
 
                     b.Navigation("Course");
 
@@ -562,8 +573,6 @@ namespace Lab_PRN231.Migrations
 
             modelBuilder.Entity("Lab_PRN231.Models.Course", b =>
                 {
-                    b.Navigation("Schedules");
-
                     b.Navigation("StudentCourses");
                 });
 

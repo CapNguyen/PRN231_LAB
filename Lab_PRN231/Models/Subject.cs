@@ -9,5 +9,7 @@ namespace Lab_PRN231.Models
         [Required]
         public string Name { get; set; }
         public int? NumberOfSlot { get; set; }
+
+        public ICollection<Course> Courses { get; set; } = new List<Course>();
     }
 }

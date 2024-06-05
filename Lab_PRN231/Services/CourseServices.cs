@@ -78,5 +78,15 @@ namespace Lab_PRN231.Services
             s = mapper.Map(CourseDTO, s);
             await db.SaveChangesAsync();
         }
+
+        public async Task<List<CourseDTO>> GetAll()
+        {
+            var courses = await db.Courses
+                .Join(db.StudentCourses, c => c.Id, sc => sc.CourseId, (c, sc) => new { c, sc })
+                .Join(db.Students, sc => sc.c.Id, s => s.Id, (c, s) => new { c, s })
+                .ToListAsync();
+            var dtos = mapper.Map<List<CourseDTO>>(courses);
+            return dtos;
+        }
     }
 }
