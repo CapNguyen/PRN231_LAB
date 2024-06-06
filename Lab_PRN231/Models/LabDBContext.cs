@@ -18,21 +18,8 @@ namespace Lab_PRN231.Models
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Student>().HasKey(s => s.Id);
-            modelBuilder.Entity<Student>().
-            HasData(
-                new Student() { Id = 1, Name = "Nguyen Minh Hieu", StudentCode = "HE171547", Gender = true },
-                new Student() { Id = 2, Name = "Vu Minh Hieu", StudentCode = "HE172039", Gender = true },
-                new Student() { Id = 3, Name = "Nguyen Minh Duy", StudentCode = "HE172040", Gender = false }
-           );
 
             modelBuilder.Entity<Teacher>().HasKey(t => t.Id);
-            modelBuilder.Entity<Teacher>().
-            HasData(
-                new Teacher() { Id = 1, Name = "Le Phuong Chi", Gender = false },
-                new Teacher() { Id = 2, Name = "Doan Thi Vanh Khuyen", Gender = false },
-                new Teacher() { Id = 3, Name = "Bui Thi Loan", Gender = false },
-                new Teacher() { Id = 4, Name = "Vu Hong Thai", Gender = true }
-                );
 
             modelBuilder.Entity<Course>(entity =>
             {
@@ -46,22 +33,8 @@ namespace Lab_PRN231.Models
                     ;
 
             });
-            modelBuilder.Entity<Course>().
-                HasData(
-                new Course() { Id = 1, CourseName = "SE1705-NET", StartDate = DateTime.Parse("2024-05-06"), EndDate = DateTime.Parse("2024-07-15"), TimeSlot = "P20", SubjectCode = "EXE201" },
-                new Course() { Id = 2, CourseName = "SE1705-NET", StartDate = DateTime.Parse("2024-05-07"), EndDate = DateTime.Parse("2024-07-20"), TimeSlot = "P63", SubjectCode = "PRN231" },
-                new Course() { Id = 3, CourseName = "SE1705-NET", StartDate = DateTime.Parse("2024-05-06"), EndDate = DateTime.Parse("2024-07-17"), TimeSlot = "P42", SubjectCode = "PRM392" },
-                new Course() { Id = 4, CourseName = "EL1701", StartDate = DateTime.Parse("2024-05-07"), EndDate = DateTime.Parse("2024-06-14"), TimeSlot = "P36", SubjectCode = "MLN111" }
-                );
 
             modelBuilder.Entity<Subject>().HasKey(s => s.Code);
-            modelBuilder.Entity<Subject>().
-            HasData(
-                new Subject() { Code = "PRN231", Name = "Building Cross-Platform Back-End Application With .NET", NumberOfSlot = 22 },
-                new Subject() { Code = "PRM392", Name = "Mobile Programming", NumberOfSlot = 20 },
-                new Subject() { Code = "EXE201", Name = "Experiential Entrepreneurship", NumberOfSlot = 16 },
-                new Subject() { Code = "MLN111", Name = "Philosophy of Marxism – Leninism", NumberOfSlot = 12 }
-                );
 
             modelBuilder.Entity<Schedule>(entity =>
             {
@@ -73,13 +46,6 @@ namespace Lab_PRN231.Models
                     .WithMany(t => t.Schedules)
                     .HasForeignKey(s => s.TeacherId);
             });
-            modelBuilder.Entity<Schedule>().
-               HasData(
-               new Schedule() { Id = 1, Slot = 1, Date = DateTime.Parse("2024-05-06"), CourseId = 1, TeacherId = 2 },
-               new Schedule() { Id = 2, Slot = 1, Date = DateTime.Parse("2024-05-07"), CourseId = 2, TeacherId = 1 },
-               new Schedule() { Id = 3, Slot = 1, Date = DateTime.Parse("2024-05-06"), CourseId = 3, TeacherId = 3 },
-               new Schedule() { Id = 4, Slot = 1, Date = DateTime.Parse("2024-05-07"), CourseId = 4, TeacherId = 4 }
-               );
 
             modelBuilder.Entity<StudentCourse>(entity =>
             {
@@ -92,23 +58,7 @@ namespace Lab_PRN231.Models
                 entity.HasOne(sc => sc.Course)
                     .WithMany(c => c.StudentCourses)
                     .HasForeignKey(sc => sc.CourseId);
-            }
-            );
-            modelBuilder.Entity<StudentCourse>().
-               HasData(
-               new StudentCourse() { CourseId = 1, StudentId = 1 },
-               new StudentCourse() { CourseId = 2, StudentId = 1 },
-               new StudentCourse() { CourseId = 3, StudentId = 1 },
-               new StudentCourse() { CourseId = 4, StudentId = 1 },
-               new StudentCourse() { CourseId = 1, StudentId = 2 },
-               new StudentCourse() { CourseId = 2, StudentId = 2 },
-               new StudentCourse() { CourseId = 3, StudentId = 2 },
-               new StudentCourse() { CourseId = 4, StudentId = 2 },
-               new StudentCourse() { CourseId = 1, StudentId = 3 },
-               new StudentCourse() { CourseId = 2, StudentId = 3 },
-               new StudentCourse() { CourseId = 3, StudentId = 3 },
-               new StudentCourse() { CourseId = 4, StudentId = 3 }
-               );
+            });
 
             modelBuilder.Entity<StudentSchedule>(entity =>
             {
@@ -121,45 +71,77 @@ namespace Lab_PRN231.Models
                 entity.HasOne(ss => ss.Schedule)
                     .WithMany(s => s.StudentSchedules)
                     .HasForeignKey(ss => ss.ScheduleId);
-            }
-            );
-            modelBuilder.Entity<StudentSchedule>().
+            });
+            Seeding(modelBuilder);
+        }
+
+        private void Seeding(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Student>().
+            HasData(
+                new Student() { Id = 1, Name = "Nguyen Minh Hieu", StudentCode = "HE171547", Gender = true },
+                new Student() { Id = 2, Name = "Vu Minh Hieu", StudentCode = "HE172039", Gender = true },
+                new Student() { Id = 3, Name = "Nguyen Minh Duy", StudentCode = "HE172040", Gender = false }
+           );
+            modelBuilder.Entity<Teacher>().
+            HasData(
+                new Teacher() { Id = 1, Name = "Le Phuong Chi", Gender = false },
+                new Teacher() { Id = 2, Name = "Doan Thi Vanh Khuyen", Gender = false },
+                new Teacher() { Id = 3, Name = "Bui Thi Loan", Gender = false },
+                new Teacher() { Id = 4, Name = "Vu Hong Thai", Gender = true }
+                );
+            modelBuilder.Entity<Course>().
+                HasData(
+                new Course() { Id = 1, CourseName = "SE1705-NET", StartDate = DateTime.Parse("2024-05-06"), EndDate = DateTime.Parse("2024-07-15"), TimeSlot = "P24", SubjectCode = "EXE201" },
+                new Course() { Id = 2, CourseName = "SE1705-NET", StartDate = DateTime.Parse("2024-05-07"), EndDate = DateTime.Parse("2024-07-20"), TimeSlot = "P63", SubjectCode = "PRN231" },
+                new Course() { Id = 3, CourseName = "SE1705-NET", StartDate = DateTime.Parse("2024-05-06"), EndDate = DateTime.Parse("2024-07-17"), TimeSlot = "P42", SubjectCode = "PRM392" },
+                new Course() { Id = 4, CourseName = "EL1701", StartDate = DateTime.Parse("2024-05-07"), EndDate = DateTime.Parse("2024-06-14"), TimeSlot = "P36", SubjectCode = "MLN111" }
+                );
+            modelBuilder.Entity<Subject>().
+            HasData(
+                new Subject() { Code = "PRN231", Name = "Building Cross-Platform Back-End Application With .NET", NumberOfSlot = 22 },
+                new Subject() { Code = "PRM392", Name = "Mobile Programming", NumberOfSlot = 20 },
+                new Subject() { Code = "EXE201", Name = "Experiential Entrepreneurship", NumberOfSlot = 16 },
+                new Subject() { Code = "MLN111", Name = "Philosophy of Marxism – Leninism", NumberOfSlot = 12 }
+                );
+            modelBuilder.Entity<Schedule>().
                HasData(
-               new StudentSchedule() { ScheduleId = 1, StudentId = 1, Status = Status.Attended },
-               new StudentSchedule() { ScheduleId = 2, StudentId = 1, Status = Status.Absent },
-               new StudentSchedule() { ScheduleId = 3, StudentId = 1, Status = Status.Attended },
-               new StudentSchedule() { ScheduleId = 4, StudentId = 1, Status = Status.Attended },
-               new StudentSchedule() { ScheduleId = 1, StudentId = 2, Status = Status.Attended },
-               new StudentSchedule() { ScheduleId = 2, StudentId = 2, Status = Status.Attended },
-               new StudentSchedule() { ScheduleId = 3, StudentId = 2, Status = Status.Attended },
-               new StudentSchedule() { ScheduleId = 4, StudentId = 2, Status = Status.Attended },
-               new StudentSchedule() { ScheduleId = 1, StudentId = 3, Status = Status.Attended },
-               new StudentSchedule() { ScheduleId = 2, StudentId = 3, Status = Status.Attended },
-               new StudentSchedule() { ScheduleId = 3, StudentId = 3, Status = Status.Absent },
-               new StudentSchedule() { ScheduleId = 4, StudentId = 3, Status = Status.Attended }
+               new Schedule() { Id = 1, Slot = 1, Date = DateTime.Parse("2024-05-06"), CourseId = 1, TeacherId = 2 },
+               new Schedule() { Id = 2, Slot = 1, Date = DateTime.Parse("2024-05-07"), CourseId = 2, TeacherId = 1 },
+               new Schedule() { Id = 3, Slot = 1, Date = DateTime.Parse("2024-05-06"), CourseId = 3, TeacherId = 3 },
+               new Schedule() { Id = 4, Slot = 1, Date = DateTime.Parse("2024-05-07"), CourseId = 4, TeacherId = 4 }
                );
+            //modelBuilder.Entity<StudentCourse>().
+            //   HasData(
+            //   new StudentCourse() { CourseId = 1, StudentId = 1 },
+            //   new StudentCourse() { CourseId = 2, StudentId = 1 },
+            //   new StudentCourse() { CourseId = 3, StudentId = 1 },
+            //   new StudentCourse() { CourseId = 4, StudentId = 1 },
+            //   new StudentCourse() { CourseId = 1, StudentId = 2 },
+            //   new StudentCourse() { CourseId = 2, StudentId = 2 },
+            //   new StudentCourse() { CourseId = 3, StudentId = 2 },
+            //   new StudentCourse() { CourseId = 4, StudentId = 2 },
+            //   new StudentCourse() { CourseId = 1, StudentId = 3 },
+            //   new StudentCourse() { CourseId = 2, StudentId = 3 },
+            //   new StudentCourse() { CourseId = 3, StudentId = 3 },
+            //   new StudentCourse() { CourseId = 4, StudentId = 3 }
+            //   );
+            //modelBuilder.Entity<StudentSchedule>().
+            //   HasData(
+            //   new StudentSchedule() { ScheduleId = 1, StudentId = 1, Status = Status.Attended },
+            //   new StudentSchedule() { ScheduleId = 2, StudentId = 1, Status = Status.Absent },
+            //   new StudentSchedule() { ScheduleId = 3, StudentId = 1, Status = Status.Attended },
+            //   new StudentSchedule() { ScheduleId = 4, StudentId = 1, Status = Status.Attended },
+            //   new StudentSchedule() { ScheduleId = 1, StudentId = 2, Status = Status.Attended },
+            //   new StudentSchedule() { ScheduleId = 2, StudentId = 2, Status = Status.Attended },
+            //   new StudentSchedule() { ScheduleId = 3, StudentId = 2, Status = Status.Attended },
+            //   new StudentSchedule() { ScheduleId = 4, StudentId = 2, Status = Status.Attended },
+            //   new StudentSchedule() { ScheduleId = 1, StudentId = 3, Status = Status.Attended },
+            //   new StudentSchedule() { ScheduleId = 2, StudentId = 3, Status = Status.Attended },
+            //   new StudentSchedule() { ScheduleId = 3, StudentId = 3, Status = Status.Absent },
+            //   new StudentSchedule() { ScheduleId = 4, StudentId = 3, Status = Status.Attended }
+            //   );
 
-            //modelBuilder.Entity<TeacherSubject>(entity =>
-            //{
-            //    entity.HasKey(ts => new { ts.TeacherId, ts.SubjectCode });
-
-            //    entity.HasOne(ts => ts.Teacher)
-            //        .WithMany(t => t.TeacherSubjects)
-            //        .HasForeignKey(ts => ts.TeacherId)
-            //        ;
-
-            //    entity.HasOne(ts => ts.Subject)
-            //        .WithMany(s => s.TeacherSubjects)
-            //        .HasForeignKey(ts => ts.SubjectCode)
-            //        ; 
-            //});
-            //modelBuilder.Entity<TeacherSubject>().
-            //    HasData(
-            //    new TeacherSubject { TeacherId = 1, SubjectCode = "PRN231" },
-            //    new TeacherSubject { TeacherId = 2, SubjectCode = "MLN111" },
-            //    new TeacherSubject { TeacherId = 3, SubjectCode = "PRM392" },
-            //    new TeacherSubject { TeacherId = 4, SubjectCode = "EXE201" }
-            //);
         }
     }
 }

@@ -12,11 +12,13 @@ namespace Lab_PRN231.Controllers
     {
         private readonly ICourse course_services;
         private readonly IStudentCourses studentCourses_services;
+        private readonly IStudentSchedules studentSchedules_services;
 
-        public CourseController(ICourse services, IStudentCourses studentCourses_services)
+        public CourseController(ICourse services, IStudentCourses studentCourses_services, IStudentSchedules studentSchedules_services)
         {
             this.course_services = services;
             this.studentCourses_services = studentCourses_services;
+            this.studentSchedules_services = studentSchedules_services;
         }
 
         [HttpGet]
@@ -43,6 +45,7 @@ namespace Lab_PRN231.Controllers
         public async Task<IActionResult> Add([FromBody] CourseDTO courseDTO)
         {
             await course_services.AddCourse(courseDTO);
+            await studentSchedules_services.GenerateScheduleForCourse(courseDTO);
             return Ok();
         }
 

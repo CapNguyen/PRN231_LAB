@@ -28,6 +28,10 @@ namespace Lab_PRN231.Services
                     if (s != null)
                     {
                         await db.AddAsync(new StudentCourse(id, s, courseId, c));
+                        foreach (Schedule schedule in c.Schedules)
+                        {
+                            await db.AddAsync(new StudentSchedule(s.Id, s, schedule.Id, schedule, Status.NotYet));
+                        }
                     }
                 }
             }
@@ -53,7 +57,7 @@ namespace Lab_PRN231.Services
 
         public async Task<List<StudentDTO>> StudentInCourse(int courseId)
         {
-            List<Student?> students= await db.StudentCourses
+            List<Student?> students = await db.StudentCourses
                                     .Where(sc => sc.CourseId == courseId)
                                     .Select(sc => sc.Student)
                                     .ToListAsync();

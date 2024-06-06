@@ -53,12 +53,12 @@ namespace Lab_PRN231.Controllers
             return Ok(schedule);
         }
 
-        [HttpGet]
-        [Route("GenerateSchedules/{courseId}")]
-        public async Task<IActionResult> GenerateScheduleForCourse([FromRoute] int courseId)
+        [HttpPost]
+        [Route("GenerateSchedules")]
+        public async Task<IActionResult> GenerateScheduleForCourse([FromBody] CourseDTO courseDTO)
         {
-            var check = await ss_services.GenerateScheduleForCourse(courseId);
-            return Ok(check);
+            await ss_services.GenerateScheduleForCourse(courseDTO);
+            return Ok();
         }
     }
     public class TakeAttendanceRequest

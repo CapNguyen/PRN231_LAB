@@ -10,7 +10,8 @@ namespace Lab_PRN231.Models
         public string CourseName { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
-        public string? TimeSlot { get; set; }
+        [RegularExpression(@"^[AP](\d)(?!\1)\d$")]
+        public string TimeSlot { get; set; }
         [ForeignKey("Subject")]
         public string SubjectCode { get; set; }
         public Subject Subject { get; set; }
