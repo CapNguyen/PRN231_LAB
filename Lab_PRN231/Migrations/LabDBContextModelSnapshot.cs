@@ -152,38 +152,6 @@ namespace Lab_PRN231.Migrations
                             Date = new DateTime(2024, 5, 7, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Slot = 1,
                             TeacherId = 4
-                        },
-                        new
-                        {
-                            Id = 5,
-                            CourseId = 1,
-                            Date = new DateTime(2024, 5, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Slot = 2,
-                            TeacherId = 2
-                        },
-                        new
-                        {
-                            Id = 6,
-                            CourseId = 2,
-                            Date = new DateTime(2024, 5, 7, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Slot = 2,
-                            TeacherId = 1
-                        },
-                        new
-                        {
-                            Id = 7,
-                            CourseId = 3,
-                            Date = new DateTime(2024, 5, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Slot = 2,
-                            TeacherId = 3
-                        },
-                        new
-                        {
-                            Id = 8,
-                            CourseId = 4,
-                            Date = new DateTime(2024, 5, 7, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Slot = 2,
-                            TeacherId = 4
                         });
                 });
 

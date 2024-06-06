@@ -14,6 +14,7 @@ namespace Lab_PRN231.Models
         [ForeignKey("Subject")]
         public string SubjectCode { get; set; }
         public Subject Subject { get; set; }
+
         public ICollection<Schedule>? Schedules { get; set; } = new List<Schedule>();
         public ICollection<StudentCourse>? StudentCourses { get; set; } = new List<StudentCourse>();
 

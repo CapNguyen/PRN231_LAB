@@ -11,5 +11,6 @@ namespace Lab_PRN231.DTOs
         public string? CourseName { get; set; }
         public int? TeacherId { get; set; }
         public string? TeacherName { get; set; }
+        public Status Status { get; set; }
     }
 }

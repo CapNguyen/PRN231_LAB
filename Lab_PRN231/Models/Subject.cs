@@ -11,5 +11,6 @@ namespace Lab_PRN231.Models
         public int? NumberOfSlot { get; set; }
 
         public ICollection<Course> Courses { get; set; } = new List<Course>();
+
     }
 }

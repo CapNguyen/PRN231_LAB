@@ -8,11 +8,13 @@ namespace Lab_PRN231.Mappers
     {
         public MyMapperProfile()
         {
-            CreateMap<Course, CourseDTO>();
+            CreateMap<Course, CourseDTO>()
                 //.ForMember(dest => dest.SubjectCode, opt =>
                 //    opt.MapFrom(src => src.Subject!.Code));
                 //.ForMember(dest => dest.Students, opt =>
                 //    opt.MapFrom(src => src.StudentCourses!.Select(sc => sc.Student)));
+                .ForMember(dest => dest.TeacherId, opt => opt.Ignore())
+                ;
             CreateMap<Schedule, ScheduleDTO>()
                 .ForMember(dest => dest.CourseName, opt =>
                     opt.MapFrom(src => src.Course!.CourseName))

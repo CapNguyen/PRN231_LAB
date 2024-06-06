@@ -9,6 +9,17 @@ namespace Lab_PRN231.Models
         public int CourseId { get; set; }
         public Course? Course { get; set; }
 
+        public StudentCourse()
+        {
+        }
+
+        public StudentCourse(int studentId, Student? student, int courseId, Course? course)
+        {
+            StudentId = studentId;
+            Student = student;
+            CourseId = courseId;
+            Course = course;
+        }
     }
        
 }

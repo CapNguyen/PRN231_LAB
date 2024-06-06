@@ -10,5 +10,8 @@ namespace Lab_PRN231.DTOs
         public DateTime? EndDate { get; set; }
         public string? TimeSlot { get; set; }
         public string? SubjectCode { get; set; }
+
+        public int? TeacherId {  get; set; }
+
     }
 }

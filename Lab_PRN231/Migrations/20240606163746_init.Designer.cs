@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Lab_PRN231.Migrations
 {
     [DbContext(typeof(LabDBContext))]
-    [Migration("20240605182548_u11")]
-    partial class u11
+    [Migration("20240606163746_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -36,7 +36,7 @@ namespace Lab_PRN231.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("EndDate")
+                    b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime>("StartDate")
@@ -102,7 +102,7 @@ namespace Lab_PRN231.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int?>("CourseId")
+                    b.Property<int>("CourseId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("Date")
@@ -111,7 +111,7 @@ namespace Lab_PRN231.Migrations
                     b.Property<int>("Slot")
                         .HasColumnType("int");
 
-                    b.Property<int?>("TeacherId")
+                    b.Property<int>("TeacherId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -153,38 +153,6 @@ namespace Lab_PRN231.Migrations
                             CourseId = 4,
                             Date = new DateTime(2024, 5, 7, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Slot = 1,
-                            TeacherId = 4
-                        },
-                        new
-                        {
-                            Id = 5,
-                            CourseId = 1,
-                            Date = new DateTime(2024, 5, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Slot = 2,
-                            TeacherId = 2
-                        },
-                        new
-                        {
-                            Id = 6,
-                            CourseId = 2,
-                            Date = new DateTime(2024, 5, 7, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Slot = 2,
-                            TeacherId = 1
-                        },
-                        new
-                        {
-                            Id = 7,
-                            CourseId = 3,
-                            Date = new DateTime(2024, 5, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Slot = 2,
-                            TeacherId = 3
-                        },
-                        new
-                        {
-                            Id = 8,
-                            CourseId = 4,
-                            Date = new DateTime(2024, 5, 7, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Slot = 2,
                             TeacherId = 4
                         });
                 });
@@ -509,11 +477,15 @@ namespace Lab_PRN231.Migrations
                 {
                     b.HasOne("Lab_PRN231.Models.Course", "Course")
                         .WithMany("Schedules")
-                        .HasForeignKey("CourseId");
+                        .HasForeignKey("CourseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Lab_PRN231.Models.Teacher", "Teacher")
                         .WithMany("Schedules")
-                        .HasForeignKey("TeacherId");
+                        .HasForeignKey("TeacherId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Course");
 

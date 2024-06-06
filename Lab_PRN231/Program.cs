@@ -24,6 +24,8 @@ builder.Services.AddTransient<ISchedule, ScheduleServices>();
 builder.Services.AddTransient<IStudent, StudentServices>();
 builder.Services.AddTransient<ITeacher, TeacherServices>();
 builder.Services.AddTransient<ISubject, SubjectServices>();
+builder.Services.AddTransient<IStudentCourses, StudentCoursesService>();
+builder.Services.AddTransient<IStudentSchedules, StudentSchedulesServices>();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
