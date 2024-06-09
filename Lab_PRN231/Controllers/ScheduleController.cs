@@ -60,6 +60,15 @@ namespace Lab_PRN231.Controllers
             await ss_services.GenerateScheduleForCourse(courseDTO);
             return Ok();
         }
+
+        [HttpGet]
+        [EnableQuery]
+        [Route("All/Course/{courseId}/{slot}")]
+        public async Task<IActionResult> AttendancesInCourseBySlot([FromRoute] int courseId, [FromRoute] int slot)
+        {
+            var schedules = await s_services.AttendancesInCourseBySlot(courseId, slot);
+            return Ok(schedules);
+        }
     }
     public class TakeAttendanceRequest
     {
@@ -67,4 +76,5 @@ namespace Lab_PRN231.Controllers
         public int ScheduleId { get; set; }
         public Status Status { get; set; }
     }
+   
 }

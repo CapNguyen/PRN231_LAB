@@ -7,6 +7,7 @@ namespace Lab_PRN231.Services.IRepository
     {
         Task<List<ScheduleDTO>> All();
         Task<List<ScheduleDTO>> AttendancesInCourse(int courseId);
+        Task<List<ScheduleDTO>> AttendancesInCourseBySlot(int courseId,int slot);
         Task<List<ScheduleDTO>> AttendanceOfStudent(int studentId);
         Task<ScheduleDTO> TakeAttendance(int studentId, int scheduleId, Status status);
 

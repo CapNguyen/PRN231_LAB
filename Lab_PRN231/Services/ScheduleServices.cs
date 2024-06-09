@@ -81,6 +81,36 @@ namespace Lab_PRN231.Services
             return attendances;
         }
 
+        public async Task<List<ScheduleDTO>> AttendancesInCourseBySlot(int courseId, int slot)
+        {
+            Course c= db.Courses.FirstOrDefault(c=>c.Id == courseId);
+            if (c == null)
+            {
+                return null;
+            }
+            var attendances= await db.Schedules
+              .Where(s => (s.Slot==slot && s.CourseId==courseId))
+              .Include(s => s.Course)
+            .Include(s => s.Teacher)
+            .Include(s => s.StudentSchedules)
+            .SelectMany(s => s.StudentSchedules.Select(ss => new ScheduleDTO()
+            {
+                Id = ss.ScheduleId,
+                Slot = s.Slot,
+                Date = s.Date,
+                CourseId = s.CourseId,
+                CourseName = s.Course.CourseName,
+                TeacherId = s.TeacherId,
+                TeacherName = s.Teacher.Name,
+                Status = ss.Status
+            }))
+            .Distinct()
+            .ToListAsync();
+            return attendances;
+
+
+        }
+
         public async Task<ScheduleDTO> TakeAttendance(int studentId, int scheduleId, Status status)
         {
             Student student = db.Students
