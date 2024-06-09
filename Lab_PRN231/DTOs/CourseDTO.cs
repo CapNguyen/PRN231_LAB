@@ -1,5 +1,4 @@
-﻿using Lab_AttendanceManagement.Models;
-using System.ComponentModel.DataAnnotations;
+﻿
 
 namespace Lab_PRN231.DTOs
 {
@@ -11,5 +10,8 @@ namespace Lab_PRN231.DTOs
         public DateTime? EndDate { get; set; }
         public string? TimeSlot { get; set; }
         public string? SubjectCode { get; set; }
+
+        public int? TeacherId {  get; set; }
+
     }
 }

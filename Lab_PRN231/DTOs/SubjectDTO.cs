@@ -9,4 +9,3 @@ namespace Lab_PRN231.DTOs
         public int? NumberOfSlot { get; set; }
     }
 }
-}

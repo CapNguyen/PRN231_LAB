@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Lab_AttendanceManagement.Models
+namespace Lab_PRN231.Models
 {
     public class Student
     {
@@ -10,6 +10,7 @@ namespace Lab_AttendanceManagement.Models
         [Required]
         public string Name { get; set; }
         public bool Gender { get; set; }
-        public ICollection<StudentCourse>? StudentCourses { get; set; }
+        public ICollection<StudentCourse>? StudentCourses { get; set; } = new List<StudentCourse>();
+        public ICollection<StudentSchedule>? StudentSchedules { get; set; } = new List<StudentSchedule>();
     }
 }

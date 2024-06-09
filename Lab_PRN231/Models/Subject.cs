@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Lab_AttendanceManagement.Models
+namespace Lab_PRN231.Models
 {
     public class Subject
     {
@@ -9,5 +9,8 @@ namespace Lab_AttendanceManagement.Models
         [Required]
         public string Name { get; set; }
         public int? NumberOfSlot { get; set; }
+
+        public ICollection<Course> Courses { get; set; } = new List<Course>();
+
     }
 }
