@@ -4,6 +4,7 @@ using Lab_PRN231.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Lab_PRN231.Migrations
 {
     [DbContext(typeof(LabDBContext))]
-    partial class LabDBContextModelSnapshot : ModelSnapshot
+    [Migration("20240615110727_sd1")]
+    partial class sd1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -248,68 +250,6 @@ namespace Lab_PRN231.Migrations
                     b.HasIndex("CourseId");
 
                     b.ToTable("StudentCourses");
-
-                    b.HasData(
-                        new
-                        {
-                            StudentId = 1,
-                            CourseId = 1
-                        },
-                        new
-                        {
-                            StudentId = 1,
-                            CourseId = 2
-                        },
-                        new
-                        {
-                            StudentId = 1,
-                            CourseId = 3
-                        },
-                        new
-                        {
-                            StudentId = 1,
-                            CourseId = 4
-                        },
-                        new
-                        {
-                            StudentId = 2,
-                            CourseId = 1
-                        },
-                        new
-                        {
-                            StudentId = 2,
-                            CourseId = 2
-                        },
-                        new
-                        {
-                            StudentId = 2,
-                            CourseId = 3
-                        },
-                        new
-                        {
-                            StudentId = 2,
-                            CourseId = 4
-                        },
-                        new
-                        {
-                            StudentId = 3,
-                            CourseId = 1
-                        },
-                        new
-                        {
-                            StudentId = 3,
-                            CourseId = 2
-                        },
-                        new
-                        {
-                            StudentId = 3,
-                            CourseId = 3
-                        },
-                        new
-                        {
-                            StudentId = 3,
-                            CourseId = 4
-                        });
                 });
 
             modelBuilder.Entity("Lab_PRN231.Models.StudentSchedule", b =>
@@ -328,152 +268,6 @@ namespace Lab_PRN231.Migrations
                     b.HasIndex("ScheduleId");
 
                     b.ToTable("StudentSchedules");
-
-                    b.HasData(
-                        new
-                        {
-                            StudentId = 1,
-                            ScheduleId = 1,
-                            Status = 2
-                        },
-                        new
-                        {
-                            StudentId = 1,
-                            ScheduleId = 2,
-                            Status = 1
-                        },
-                        new
-                        {
-                            StudentId = 1,
-                            ScheduleId = 3,
-                            Status = 2
-                        },
-                        new
-                        {
-                            StudentId = 1,
-                            ScheduleId = 4,
-                            Status = 2
-                        },
-                        new
-                        {
-                            StudentId = 2,
-                            ScheduleId = 1,
-                            Status = 2
-                        },
-                        new
-                        {
-                            StudentId = 2,
-                            ScheduleId = 2,
-                            Status = 2
-                        },
-                        new
-                        {
-                            StudentId = 2,
-                            ScheduleId = 3,
-                            Status = 2
-                        },
-                        new
-                        {
-                            StudentId = 2,
-                            ScheduleId = 4,
-                            Status = 2
-                        },
-                        new
-                        {
-                            StudentId = 3,
-                            ScheduleId = 1,
-                            Status = 2
-                        },
-                        new
-                        {
-                            StudentId = 3,
-                            ScheduleId = 2,
-                            Status = 2
-                        },
-                        new
-                        {
-                            StudentId = 3,
-                            ScheduleId = 3,
-                            Status = 1
-                        },
-                        new
-                        {
-                            StudentId = 3,
-                            ScheduleId = 4,
-                            Status = 2
-                        },
-                        new
-                        {
-                            StudentId = 1,
-                            ScheduleId = 5,
-                            Status = 2
-                        },
-                        new
-                        {
-                            StudentId = 1,
-                            ScheduleId = 6,
-                            Status = 1
-                        },
-                        new
-                        {
-                            StudentId = 1,
-                            ScheduleId = 7,
-                            Status = 2
-                        },
-                        new
-                        {
-                            StudentId = 1,
-                            ScheduleId = 8,
-                            Status = 0
-                        },
-                        new
-                        {
-                            StudentId = 2,
-                            ScheduleId = 5,
-                            Status = 2
-                        },
-                        new
-                        {
-                            StudentId = 2,
-                            ScheduleId = 6,
-                            Status = 2
-                        },
-                        new
-                        {
-                            StudentId = 2,
-                            ScheduleId = 7,
-                            Status = 2
-                        },
-                        new
-                        {
-                            StudentId = 2,
-                            ScheduleId = 8,
-                            Status = 0
-                        },
-                        new
-                        {
-                            StudentId = 3,
-                            ScheduleId = 5,
-                            Status = 2
-                        },
-                        new
-                        {
-                            StudentId = 3,
-                            ScheduleId = 6,
-                            Status = 2
-                        },
-                        new
-                        {
-                            StudentId = 3,
-                            ScheduleId = 7,
-                            Status = 1
-                        },
-                        new
-                        {
-                            StudentId = 3,
-                            ScheduleId = 8,
-                            Status = 0
-                        });
                 });
 
             modelBuilder.Entity("Lab_PRN231.Models.Subject", b =>

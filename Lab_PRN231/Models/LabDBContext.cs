@@ -109,38 +109,56 @@ namespace Lab_PRN231.Models
                new Schedule() { Id = 1, Slot = 1, Date = DateTime.Parse("2024-05-06"), CourseId = 1, TeacherId = 2 },
                new Schedule() { Id = 2, Slot = 1, Date = DateTime.Parse("2024-05-07"), CourseId = 2, TeacherId = 1 },
                new Schedule() { Id = 3, Slot = 1, Date = DateTime.Parse("2024-05-06"), CourseId = 3, TeacherId = 3 },
-               new Schedule() { Id = 4, Slot = 1, Date = DateTime.Parse("2024-05-07"), CourseId = 4, TeacherId = 4 }
+               new Schedule() { Id = 4, Slot = 1, Date = DateTime.Parse("2024-05-07"), CourseId = 4, TeacherId = 4 },
+               new Schedule() { Id = 5, Slot = 2, Date = DateTime.Parse("2024-05-13"), CourseId = 1, TeacherId = 2 },
+               new Schedule() { Id = 6, Slot = 2, Date = DateTime.Parse("2024-05-10"), CourseId = 2, TeacherId = 1 },
+               new Schedule() { Id = 7, Slot = 2, Date = DateTime.Parse("2024-05-08"), CourseId = 3, TeacherId = 3 },
+               new Schedule() { Id = 8, Slot = 2, Date = DateTime.Parse("2024-05-10"), CourseId = 4, TeacherId = 4 }
+
                );
-            //modelBuilder.Entity<StudentCourse>().
-            //   HasData(
-            //   new StudentCourse() { CourseId = 1, StudentId = 1 },
-            //   new StudentCourse() { CourseId = 2, StudentId = 1 },
-            //   new StudentCourse() { CourseId = 3, StudentId = 1 },
-            //   new StudentCourse() { CourseId = 4, StudentId = 1 },
-            //   new StudentCourse() { CourseId = 1, StudentId = 2 },
-            //   new StudentCourse() { CourseId = 2, StudentId = 2 },
-            //   new StudentCourse() { CourseId = 3, StudentId = 2 },
-            //   new StudentCourse() { CourseId = 4, StudentId = 2 },
-            //   new StudentCourse() { CourseId = 1, StudentId = 3 },
-            //   new StudentCourse() { CourseId = 2, StudentId = 3 },
-            //   new StudentCourse() { CourseId = 3, StudentId = 3 },
-            //   new StudentCourse() { CourseId = 4, StudentId = 3 }
-            //   );
-            //modelBuilder.Entity<StudentSchedule>().
-            //   HasData(
-            //   new StudentSchedule() { ScheduleId = 1, StudentId = 1, Status = Status.Attended },
-            //   new StudentSchedule() { ScheduleId = 2, StudentId = 1, Status = Status.Absent },
-            //   new StudentSchedule() { ScheduleId = 3, StudentId = 1, Status = Status.Attended },
-            //   new StudentSchedule() { ScheduleId = 4, StudentId = 1, Status = Status.Attended },
-            //   new StudentSchedule() { ScheduleId = 1, StudentId = 2, Status = Status.Attended },
-            //   new StudentSchedule() { ScheduleId = 2, StudentId = 2, Status = Status.Attended },
-            //   new StudentSchedule() { ScheduleId = 3, StudentId = 2, Status = Status.Attended },
-            //   new StudentSchedule() { ScheduleId = 4, StudentId = 2, Status = Status.Attended },
-            //   new StudentSchedule() { ScheduleId = 1, StudentId = 3, Status = Status.Attended },
-            //   new StudentSchedule() { ScheduleId = 2, StudentId = 3, Status = Status.Attended },
-            //   new StudentSchedule() { ScheduleId = 3, StudentId = 3, Status = Status.Absent },
-            //   new StudentSchedule() { ScheduleId = 4, StudentId = 3, Status = Status.Attended }
-            //   );
+            modelBuilder.Entity<StudentCourse>().
+               HasData(
+               new StudentCourse() { CourseId = 1, StudentId = 1 },
+               new StudentCourse() { CourseId = 2, StudentId = 1 },
+               new StudentCourse() { CourseId = 3, StudentId = 1 },
+               new StudentCourse() { CourseId = 4, StudentId = 1 },
+               new StudentCourse() { CourseId = 1, StudentId = 2 },
+               new StudentCourse() { CourseId = 2, StudentId = 2 },
+               new StudentCourse() { CourseId = 3, StudentId = 2 },
+               new StudentCourse() { CourseId = 4, StudentId = 2 },
+               new StudentCourse() { CourseId = 1, StudentId = 3 },
+               new StudentCourse() { CourseId = 2, StudentId = 3 },
+               new StudentCourse() { CourseId = 3, StudentId = 3 },
+               new StudentCourse() { CourseId = 4, StudentId = 3 }
+               );
+            modelBuilder.Entity<StudentSchedule>().
+               HasData(
+               new StudentSchedule() { ScheduleId = 1, StudentId = 1, Status = Status.Attended },
+               new StudentSchedule() { ScheduleId = 2, StudentId = 1, Status = Status.Absent },
+               new StudentSchedule() { ScheduleId = 3, StudentId = 1, Status = Status.Attended },
+               new StudentSchedule() { ScheduleId = 4, StudentId = 1, Status = Status.Attended },
+               new StudentSchedule() { ScheduleId = 1, StudentId = 2, Status = Status.Attended },
+               new StudentSchedule() { ScheduleId = 2, StudentId = 2, Status = Status.Attended },
+               new StudentSchedule() { ScheduleId = 3, StudentId = 2, Status = Status.Attended },
+               new StudentSchedule() { ScheduleId = 4, StudentId = 2, Status = Status.Attended },
+               new StudentSchedule() { ScheduleId = 1, StudentId = 3, Status = Status.Attended },
+               new StudentSchedule() { ScheduleId = 2, StudentId = 3, Status = Status.Attended },
+               new StudentSchedule() { ScheduleId = 3, StudentId = 3, Status = Status.Absent },
+               new StudentSchedule() { ScheduleId = 4, StudentId = 3, Status = Status.Attended },
+
+               new StudentSchedule() { ScheduleId = 5, StudentId = 1, Status = Status.Attended },
+               new StudentSchedule() { ScheduleId = 6, StudentId = 1, Status = Status.Absent },
+               new StudentSchedule() { ScheduleId = 7, StudentId = 1, Status = Status.Attended },
+               new StudentSchedule() { ScheduleId = 8, StudentId = 1, Status = Status.NotYet },
+               new StudentSchedule() { ScheduleId = 5, StudentId = 2, Status = Status.Attended },
+               new StudentSchedule() { ScheduleId = 6, StudentId = 2, Status = Status.Attended },
+               new StudentSchedule() { ScheduleId = 7, StudentId = 2, Status = Status.Attended },
+               new StudentSchedule() { ScheduleId = 8, StudentId = 2, Status = Status.NotYet },
+               new StudentSchedule() { ScheduleId = 5, StudentId = 3, Status = Status.Attended },
+               new StudentSchedule() { ScheduleId = 6, StudentId = 3, Status = Status.Attended },
+               new StudentSchedule() { ScheduleId = 7, StudentId = 3, Status = Status.Absent },
+               new StudentSchedule() { ScheduleId = 8, StudentId = 3, Status = Status.NotYet }
+               );
 
         }
     }

@@ -32,24 +32,14 @@ namespace Lab_PRN231.Services
             }
             var attendances = await db.StudentSchedules
                 .Include(ss => ss.Schedule)
-                .ThenInclude(s => s.Course)
+                    .ThenInclude(s => s.Course)
                 .Include(ss => ss.Schedule)
-                .ThenInclude(s => s.Teacher)
+                    .ThenInclude(s => s.Teacher)
                 .Where(ss => ss.StudentId == studentId)
-                .Select(ss => new ScheduleDTO
-                {
-                    Id = ss.ScheduleId,
-                    Slot = ss.Schedule.Slot,
-                    Date = ss.Schedule.Date,
-                    CourseId = ss.Schedule.CourseId,
-                    CourseName = ss.Schedule.Course.CourseName,
-                    TeacherId = ss.Schedule.TeacherId,
-                    TeacherName = ss.Schedule.Teacher.Name,
-                    Status = ss.Status
-                })
                 .ToListAsync();
-
-            return attendances;
+           
+            var dtos= mapper.Map<List<ScheduleDTO>>(attendances);
+            return dtos;
         }
 
         public async Task<List<ScheduleDTO>> AttendancesInCourse(int courseId)
@@ -65,20 +55,10 @@ namespace Lab_PRN231.Services
             .Include(s => s.Teacher)
             .Include(s => s.StudentSchedules)
             .ThenInclude(ss => ss.Student)
-            .SelectMany(s => s.StudentSchedules.Select(ss => new ScheduleDTO()
-            {
-                Id = ss.ScheduleId,
-                Slot = s.Slot,
-                Date = s.Date,
-                CourseId = s.CourseId,
-                CourseName = s.Course.CourseName,
-                TeacherId = s.TeacherId,
-                TeacherName = s.Teacher.Name,
-                Status = ss.Status
-            }))
             .Distinct()
             .ToListAsync();
-            return attendances;
+            var dtos = mapper.Map<List<ScheduleDTO>>(attendances);
+            return dtos;
         }
 
         public async Task<List<ScheduleDTO>> AttendancesInCourseBySlot(int courseId, int slot)

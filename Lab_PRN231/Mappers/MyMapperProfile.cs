@@ -20,6 +20,23 @@ namespace Lab_PRN231.Mappers
                     opt.MapFrom(src => src.Course!.CourseName))
                 .ForMember(dest => dest.TeacherName, opt =>
                     opt.MapFrom(src => src.Teacher!.Name));
+            CreateMap<StudentSchedule, ScheduleDTO>()
+                .ForMember(dest => dest.Id, opt =>
+                    opt.MapFrom(src => src.ScheduleId))
+                .ForMember(dest => dest.Slot, opt =>
+                    opt.MapFrom(src => src.Schedule!.Slot))
+                .ForMember(dest => dest.Date, opt =>
+                    opt.MapFrom(src => src.Schedule!.Date))
+                .ForMember(dest => dest.CourseId, opt =>
+                    opt.MapFrom(src => src.Schedule!.CourseId))
+                .ForMember(dest => dest.CourseName, opt =>
+                    opt.MapFrom(src => src.Schedule!.Course.CourseName))
+                .ForMember(dest => dest.TeacherId, opt =>
+                    opt.MapFrom(src => src.Schedule!.TeacherId))
+                .ForMember(dest => dest.TeacherName, opt =>
+                    opt.MapFrom(src => src.Schedule!.Teacher.Name))
+                .ForMember(dest => dest.Status, opt =>
+                    opt.MapFrom(src => src.Status));
             CreateMap<Student, StudentDTO>();
             CreateMap<Teacher, TeacherDTO>();
             CreateMap<Subject, SubjectDTO>();
