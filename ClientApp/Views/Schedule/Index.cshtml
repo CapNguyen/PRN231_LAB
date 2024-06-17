@@ -1,0 +1,29 @@
+﻿@model List<Schedule>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Slot</th>
+            <th>Date</th>
+            <th>Course Name</th>
+            <th>Teacher Name</th>
+            <th>Student Name</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var schedule in Model)
+        {
+            <tr>
+                <td>@schedule.Id</td>
+                <td>@schedule.Slot</td>
+                <td>@schedule.Date.ToString("yyyy-MM-dd")</td>
+                <td>@schedule.CourseName</td>
+                <td>@schedule.TeacherName</td>
+                <td>@schedule.StudentName</td>
+                <td>@schedule.Status</td>
+            </tr>
+        }
+    </tbody>
+</table>

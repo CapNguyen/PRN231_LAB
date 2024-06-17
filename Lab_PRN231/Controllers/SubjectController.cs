@@ -25,6 +25,7 @@ namespace Lab_PRN231.Controllers
             return Ok(subjects); 
         }
         [HttpGet("{id}")]
+        [EnableQuery]
         public async Task<ActionResult<SubjectDTO>> Get(string id)
         {
             SubjectDTO subject = await services.GetSubject(id);

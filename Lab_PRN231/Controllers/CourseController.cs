@@ -31,6 +31,7 @@ namespace Lab_PRN231.Controllers
         }
 
         [HttpGet("{id}")]
+        [EnableQuery]
         public async Task<ActionResult<CourseDTO>> Get(int id)
         {
             CourseDTO course = await course_services.GetCourse(id);
@@ -64,6 +65,7 @@ namespace Lab_PRN231.Controllers
         }
         [HttpGet]
         [Route("Students/{courseId}")]
+        [EnableQuery]
         public async Task<IActionResult> GetStudentsInCourse([FromRoute] int courseId)
         {
             var students = await studentCourses_services.StudentInCourse(courseId);

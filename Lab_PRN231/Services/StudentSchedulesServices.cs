@@ -2,6 +2,7 @@
 using Lab_PRN231.DTOs;
 using Lab_PRN231.Models;
 using Lab_PRN231.Services.IRepository;
+using Microsoft.EntityFrameworkCore;
 
 namespace Lab_PRN231.Services
 {
@@ -21,58 +22,86 @@ namespace Lab_PRN231.Services
                 .FirstOrDefault(s =>
                 (s.CourseName == courseDTO.CourseName
                 && s.StartDate == courseDTO.StartDate
-                && s.EndDate == courseDTO.EndDate
                 && s.SubjectCode == courseDTO.SubjectCode
                 && s.TimeSlot == courseDTO.TimeSlot));
             var teacher = db.Teachers.FirstOrDefault(t => t.Id == courseDTO.TeacherId);
             var subject = db.Subjects.FirstOrDefault(s => s.Code == courseDTO.SubjectCode);
-            if (subject == null)
+            if (subject == null || teacher == null)
             {
                 return;
             }
-            var timeslot = DeserializeTimeSlot(courseDTO.TimeSlot);
-            var t1 = timeslot[0];
-            var t2 = timeslot[1];
             List<Schedule> schedules = new List<Schedule>();
-            int t1_count = 1;
-            int t2_count = 2;
             DateTime start = courseDTO.StartDate;
-            DateTime ts1 = GetNextDayOfWeek(GetDayOfWeek(t1.Day), start);
-            do
+            var timeslot = DeserializeTimeSlot(courseDTO.TimeSlot);
+            var count = 1;
+            var t1 = timeslot[0];
+            DateTime ts1 = start;
+            DateTime ts2 = new DateTime();
+            if (timeslot.Count > 1)
             {
-                var s = new Schedule()
-                {
-                    Slot = t1_count,
-                    Date = ts1,
-                    CourseId = course.Id,
-                    Course = course,
-                    TeacherId = teacher.Id,
-                    Teacher = teacher
-                };
-                schedules.Add(s);
-                t1_count += 2;
-                ts1.AddDays(7);
+                var t2 = timeslot[1];
+                ts2 = GetNextDayOfWeek(GetDayOfWeek(t2.Day), start);
             }
-            while (t1_count <= subject.NumberOfSlot);
-            DateTime ts2 = GetNextDayOfWeek(GetDayOfWeek(t2.Day), start);
-            do
+            if (t1.Day > 0)
             {
-                var s = new Schedule()
+                do
                 {
-                    Slot = t2_count,
-                    Date = ts2,
-                    CourseId = course.Id,
-                    Course = course,
-                    TeacherId = teacher.Id,
-                    Teacher = teacher
-                };
-                schedules.Add(s);
-                t2_count += 2;
-                ts2.AddDays(7);
+                    var s1 = new Schedule()
+                    {
+                        Slot = count,
+                        Date = ts1,
+                        CourseId = course.Id,
+                        Course = course,
+                        TeacherId = teacher.Id,
+                        Teacher = teacher,
+                    };
+                    schedules.Add(s1);
+                    count += 1;
+                    ts1 = ts1.AddDays(7);
+
+                    if (timeslot.Count > 1)
+                    {
+                        var t2 = timeslot[1];
+                        if (t2.Day > 0)
+                        {
+                            var s2 = new Schedule()
+                            {
+                                Slot = count,
+                                Date = ts2,
+                                CourseId = course.Id,
+                                Course = course,
+                                TeacherId = teacher.Id,
+                                Teacher = teacher
+                            };
+                            schedules.Add(s2);
+                            count += 1;
+                            ts2 = ts2.AddDays(7);
+                        }
+                    }
+                }
+                while (count <= subject.NumberOfSlot);
             }
-            while (t2_count <= subject.NumberOfSlot);
+           
             await db.Schedules.AddRangeAsync(schedules);
-            await db.SaveChangesAsync();    
+            await db.SaveChangesAsync();
+            GenerateStudentSchedule(course.Id, schedules);
+        }
+        public void GenerateStudentSchedule(int courseId, List<Schedule> schedules)
+        {
+            Course c = db.Courses.FirstOrDefault(c => c.Id == courseId);
+            var students = db.StudentCourses
+                .Where(sc => sc.CourseId == courseId)
+                .Include(sc => sc.Student)
+                .Select(sc => sc.Student)
+                .ToList();
+            foreach (Schedule schedule in schedules)
+            {
+                foreach (Student student in students)
+                {
+                    db.StudentSchedules.Add(new StudentSchedule(student.Id, student, schedule.Id, schedule, Status.NotYet));
+                }
+            }
+            db.SaveChanges();
         }
         public List<TimeSlotResponse> DeserializeTimeSlot(string timeslot)
         {
@@ -98,6 +127,8 @@ namespace Lab_PRN231.Services
                 result.Add(res1);
                 result.Add(res2);
             }
+
+            result = result.OrderBy(r => r.Day).Where(r => r.Day != 0).ToList();
             return result;
         }
         public DayOfWeek GetDayOfWeek(int dayValue)

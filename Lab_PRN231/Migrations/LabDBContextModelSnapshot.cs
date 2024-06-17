@@ -62,7 +62,7 @@ namespace Lab_PRN231.Migrations
                             EndDate = new DateTime(2024, 7, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             StartDate = new DateTime(2024, 5, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             SubjectCode = "EXE201",
-                            TimeSlot = "P24"
+                            TimeSlot = "P20"
                         },
                         new
                         {
@@ -128,7 +128,7 @@ namespace Lab_PRN231.Migrations
                             CourseId = 1,
                             Date = new DateTime(2024, 5, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Slot = 1,
-                            TeacherId = 2
+                            TeacherId = 4
                         },
                         new
                         {
@@ -152,39 +152,7 @@ namespace Lab_PRN231.Migrations
                             CourseId = 4,
                             Date = new DateTime(2024, 5, 7, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Slot = 1,
-                            TeacherId = 4
-                        },
-                        new
-                        {
-                            Id = 5,
-                            CourseId = 1,
-                            Date = new DateTime(2024, 5, 13, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Slot = 2,
                             TeacherId = 2
-                        },
-                        new
-                        {
-                            Id = 6,
-                            CourseId = 2,
-                            Date = new DateTime(2024, 5, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Slot = 2,
-                            TeacherId = 1
-                        },
-                        new
-                        {
-                            Id = 7,
-                            CourseId = 3,
-                            Date = new DateTime(2024, 5, 8, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Slot = 2,
-                            TeacherId = 3
-                        },
-                        new
-                        {
-                            Id = 8,
-                            CourseId = 4,
-                            Date = new DateTime(2024, 5, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Slot = 2,
-                            TeacherId = 4
                         });
                 });
 
@@ -401,78 +369,6 @@ namespace Lab_PRN231.Migrations
                             StudentId = 3,
                             ScheduleId = 4,
                             Status = 2
-                        },
-                        new
-                        {
-                            StudentId = 1,
-                            ScheduleId = 5,
-                            Status = 2
-                        },
-                        new
-                        {
-                            StudentId = 1,
-                            ScheduleId = 6,
-                            Status = 1
-                        },
-                        new
-                        {
-                            StudentId = 1,
-                            ScheduleId = 7,
-                            Status = 2
-                        },
-                        new
-                        {
-                            StudentId = 1,
-                            ScheduleId = 8,
-                            Status = 0
-                        },
-                        new
-                        {
-                            StudentId = 2,
-                            ScheduleId = 5,
-                            Status = 2
-                        },
-                        new
-                        {
-                            StudentId = 2,
-                            ScheduleId = 6,
-                            Status = 2
-                        },
-                        new
-                        {
-                            StudentId = 2,
-                            ScheduleId = 7,
-                            Status = 2
-                        },
-                        new
-                        {
-                            StudentId = 2,
-                            ScheduleId = 8,
-                            Status = 0
-                        },
-                        new
-                        {
-                            StudentId = 3,
-                            ScheduleId = 5,
-                            Status = 2
-                        },
-                        new
-                        {
-                            StudentId = 3,
-                            ScheduleId = 6,
-                            Status = 2
-                        },
-                        new
-                        {
-                            StudentId = 3,
-                            ScheduleId = 7,
-                            Status = 1
-                        },
-                        new
-                        {
-                            StudentId = 3,
-                            ScheduleId = 8,
-                            Status = 0
                         });
                 });
 

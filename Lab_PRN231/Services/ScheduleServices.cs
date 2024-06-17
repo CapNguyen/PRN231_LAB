@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Lab_PRN231.Controllers;
 using Lab_PRN231.DTOs;
 using Lab_PRN231.Models;
 using Lab_PRN231.Services.IRepository;
@@ -19,7 +20,7 @@ namespace Lab_PRN231.Services
 
         public async Task<List<ScheduleDTO>> All()
         {
-            var schedules = await db.Schedules.ToListAsync();
+            var schedules = await db.Schedules.Include(s => s.Teacher).Include(s => s.Course).ToListAsync();
             var dtos = mapper.Map<List<ScheduleDTO>>(schedules);
             return dtos;
         }
@@ -37,8 +38,8 @@ namespace Lab_PRN231.Services
                     .ThenInclude(s => s.Teacher)
                 .Where(ss => ss.StudentId == studentId)
                 .ToListAsync();
-           
-            var dtos= mapper.Map<List<ScheduleDTO>>(attendances);
+
+            var dtos = mapper.Map<List<ScheduleDTO>>(attendances);
             return dtos;
         }
 
@@ -50,42 +51,46 @@ namespace Lab_PRN231.Services
                 return null;
             }
             var attendances = await db.Schedules
-            .Where(s => s.CourseId == courseId)
-            .Include(s => s.Course)
-            .Include(s => s.Teacher)
-            .Include(s => s.StudentSchedules)
-            .ThenInclude(ss => ss.Student)
-            .Distinct()
-            .ToListAsync();
+                .Where(s => s.CourseId == courseId)
+                .Include(s => s.Course)
+                .Include(s => s.Teacher)
+                .Include(s => s.StudentSchedules)
+                    .ThenInclude(ss => ss.Student)
+                .Distinct()
+                .ToListAsync();
             var dtos = mapper.Map<List<ScheduleDTO>>(attendances);
             return dtos;
         }
 
         public async Task<List<ScheduleDTO>> AttendancesInCourseBySlot(int courseId, int slot)
         {
-            Course c= db.Courses.FirstOrDefault(c=>c.Id == courseId);
-            if (c == null)
+            var courseExists = await db.Courses.AnyAsync(c => c.Id == courseId);
+            if (!courseExists)
             {
                 return null;
             }
-            var attendances= await db.Schedules
-              .Where(s => (s.Slot==slot && s.CourseId==courseId))
-              .Include(s => s.Course)
-            .Include(s => s.Teacher)
-            .Include(s => s.StudentSchedules)
-            .SelectMany(s => s.StudentSchedules.Select(ss => new ScheduleDTO()
-            {
-                Id = ss.ScheduleId,
-                Slot = s.Slot,
-                Date = s.Date,
-                CourseId = s.CourseId,
-                CourseName = s.Course.CourseName,
-                TeacherId = s.TeacherId,
-                TeacherName = s.Teacher.Name,
-                Status = ss.Status
-            }))
-            .Distinct()
-            .ToListAsync();
+
+            var attendances = await db.Schedules
+                .Where(s => s.CourseId == courseId && s.Slot == slot)
+                .Include(s => s.Course)
+                .Include(s => s.Teacher)
+                .Include(s => s.StudentSchedules)
+                    .ThenInclude(ss => ss.Student)
+                .SelectMany(s => s.StudentSchedules.Select(ss => new ScheduleDTO
+                {
+                    Id = s.Id,
+                    Slot = s.Slot,
+                    Date = s.Date,
+                    CourseId = s.CourseId,
+                    CourseName = s.Course.CourseName,
+                    TeacherId = s.TeacherId,
+                    TeacherName = s.Teacher.Name,
+                    Status = ss.Status,
+                    StudentId = ss.StudentId,
+                    StudentName = ss.Student.Name
+                }))
+                .ToListAsync();
+
             return attendances;
 
 
@@ -100,11 +105,11 @@ namespace Lab_PRN231.Services
                 .Include(s => s.Teacher)
                 .FirstOrDefault(s => s.Id == scheduleId);
             StudentSchedule ss = db.StudentSchedules
-                .Include(s=>s.Student)
-                .Include(s=>s.Schedule)
-                    .ThenInclude(s=>s.Course)
+                .Include(s => s.Student)
                 .Include(s => s.Schedule)
-                    .ThenInclude(s=>s.Teacher)
+                    .ThenInclude(s => s.Course)
+                .Include(s => s.Schedule)
+                    .ThenInclude(s => s.Teacher)
                 .FirstOrDefault(ss => (ss.ScheduleId == scheduleId && ss.StudentId == studentId));
             if (ss != null)
             {
@@ -131,6 +136,47 @@ namespace Lab_PRN231.Services
                 Status = ss.Status
             };
             return dto;
+        }
+        public async Task<List<ScheduleDTO>> TakeAttendances(List<TakeAttendanceRequest> requests)
+        {
+            var dtos = new List<ScheduleDTO>();
+            foreach (var request in requests)
+            {
+                Student student = await db.Students
+                    .FirstOrDefaultAsync(s => s.Id == request.StudentId);
+                Schedule schedule = await db.Schedules
+                    .Include(s => s.Course)
+                    .Include(s => s.Teacher)
+                    .FirstOrDefaultAsync(s => s.Id == request.ScheduleId);
+                StudentSchedule ss = await db.StudentSchedules
+                    .Include(s => s.Student)
+                    .Include(s => s.Schedule)
+                        .ThenInclude(s => s.Course)
+                    .Include(s => s.Schedule)
+                        .ThenInclude(s => s.Teacher)
+                    .FirstOrDefaultAsync(ss => (ss.ScheduleId == request.ScheduleId && ss.StudentId == request.StudentId));
+                if (ss != null)
+                {
+                        ss.Status = request.Status;
+                }
+                await db.SaveChangesAsync();
+                var dto = new ScheduleDTO()
+                {
+                    Id = schedule.Id,
+                    Slot = schedule.Slot,
+                    Date = schedule.Date,
+                    CourseId = schedule.CourseId,
+                    CourseName = schedule.Course.CourseName,
+                    TeacherId = schedule.TeacherId,
+                    TeacherName = schedule.Teacher.Name,
+                    StudentId = ss.StudentId,
+                    StudentName = ss.Student.Name,
+                    Status = ss.Status
+
+                };
+                dtos.Add(dto);
+            }
+            return dtos;
         }
     }
 }

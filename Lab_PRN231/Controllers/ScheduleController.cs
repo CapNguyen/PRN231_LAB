@@ -3,6 +3,7 @@ using Lab_PRN231.Models;
 using Lab_PRN231.Services.IRepository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OData.Query;
+using System.Collections.Generic;
 
 namespace Lab_PRN231.Controllers
 {
@@ -29,15 +30,25 @@ namespace Lab_PRN231.Controllers
         }
         [HttpGet]
         [EnableQuery]
-        [Route("All/Course/{courseId}")]
+        [Route("Course/{courseId}")]
         public async Task<IActionResult> AttendancesInCourse([FromRoute] int courseId)
         {
             var schedules = await s_services.AttendancesInCourse(courseId);
             return Ok(schedules);
         }
+
         [HttpGet]
         [EnableQuery]
-        [Route("All/Student/{studentId}")]
+        [Route("Course/{courseId}/{slot}")]
+        public async Task<IActionResult> AttendancesInCourseBySlot([FromRoute] int courseId, [FromRoute] int slot)
+        {
+            var schedules = await s_services.AttendancesInCourseBySlot(courseId, slot);
+            return Ok(schedules);
+        }
+
+        [HttpGet]
+        [EnableQuery]
+        [Route("Student/{studentId}")]
         public async Task<IActionResult> AttendanceOfStudent([FromRoute] int studentId)
         {
             var schedules = await s_services.AttendanceOfStudent(studentId);
@@ -46,10 +57,10 @@ namespace Lab_PRN231.Controllers
 
         [HttpPost]
         [EnableQuery]
-        [Route("TakeAttendance")]
-        public async Task<IActionResult> TakeAttendance([FromBody] TakeAttendanceRequest req)
+        [Route("TakeAttendances")]
+        public async Task<IActionResult> TakeAttendance([FromBody] List<TakeAttendanceRequest> req)
         {
-            var schedule = await s_services.TakeAttendance(req.StudentId, req.ScheduleId, req.Status);
+            var schedule = await s_services.TakeAttendances(req);
             return Ok(schedule);
         }
 
@@ -60,21 +71,13 @@ namespace Lab_PRN231.Controllers
             await ss_services.GenerateScheduleForCourse(courseDTO);
             return Ok();
         }
-
-        [HttpGet]
-        [EnableQuery]
-        [Route("All/Course/{courseId}/{slot}")]
-        public async Task<IActionResult> AttendancesInCourseBySlot([FromRoute] int courseId, [FromRoute] int slot)
-        {
-            var schedules = await s_services.AttendancesInCourseBySlot(courseId, slot);
-            return Ok(schedules);
-        }
     }
+
     public class TakeAttendanceRequest
     {
         public int StudentId { get; set; }
         public int ScheduleId { get; set; }
         public Status Status { get; set; }
     }
-   
+
 }

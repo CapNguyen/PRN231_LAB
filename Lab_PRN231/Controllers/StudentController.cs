@@ -27,6 +27,7 @@ namespace Lab_PRN231.Controllers
         }
 
         [HttpGet("{id}")]
+        [EnableQuery]
         public async Task<ActionResult<StudentDTO>> Get(int id)
         {
             StudentDTO student = await services.GetStudent(id);

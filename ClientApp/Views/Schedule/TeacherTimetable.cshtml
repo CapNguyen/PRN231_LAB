@@ -1,0 +1,28 @@
+﻿@model List<Schedule>
+<h1>Teacher Timetable</h1>
+<h2>Teacher Name: @Model[0].TeacherName</h2>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Date</th>
+            <th>Slot</th>
+            <th>Course Name</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var schedule in Model)
+        {
+            <tr>
+                <td>@schedule.Date.ToString("yyyy-MM-dd")</td>
+                <td>@schedule.Slot</td>
+                <td>@schedule.CourseName</td>
+                <td>
+                    <a href="@Url.Action("TakeAttendance", "Schedule", new { courseId = schedule.CourseId, slot = schedule.Slot })">
+                        Take Attendance
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

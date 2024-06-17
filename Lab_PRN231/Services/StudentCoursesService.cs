@@ -35,6 +35,7 @@ namespace Lab_PRN231.Services
                     }
                 }
             }
+            await db.SaveChangesAsync();
         }
 
         public async Task DeletetStudentFromCourse(int courseId, List<int> studentId)

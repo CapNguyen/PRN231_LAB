@@ -1,0 +1,36 @@
+﻿@model List<Schedule>
+<h1>View Attendances</h1>
+<table class="table table-striped table-bordered">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Date</th>
+            <th>Course Name</th>
+            <th>Teacher Name</th>
+            <th>Student Name</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            int count = 0;
+        }
+        @foreach (var schedule in Model)
+        {
+            count++;
+            <tr>
+                <td>@count</td>
+                <td>@schedule.Date.ToString("yyyy-MM-dd")</td>
+                <td>@schedule.CourseName</td>
+                <td>@schedule.TeacherName</td>
+                <td>@schedule.StudentName</td>
+                <td>
+                    <span style="color: @(schedule.Status == Status.Absent ? "red" : schedule.Status == Status.Attended ? "green" : "black");">
+                        @schedule.Status
+                    </span>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+

@@ -1,0 +1,71 @@
+﻿@model List<Schedule>
+
+<h1>Take Attendance</h1>
+
+@if (Model == null || !Model.Any())
+{
+    <p>No attendances</p>
+}
+else
+{
+    <form method="post" asp-action="TakeAttendance">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Student Name</th>
+                    <th>Date</th>
+                    <th>Slot</th>
+                    <th>Course</th>
+                    <th>Status</th>
+                    <th>Teacher</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (int i = 0; i < Model.Count; i++)
+                {
+                    <input type="hidden" name="attendances[@i].ScheduleId" value="@Model[i].Id" />
+                    <tr>
+                        <td>
+                            @Model[i].StudentName
+                            <input type="hidden" name="attendances[@i].StudentId" value="@Model[i].StudentId" />
+                        </td>
+                        <td>
+                            @Model[i].Date.ToString("yyyy-MM-dd")
+                            <input type="hidden" name="attendances[@i].Date" value="@Model[i].Date.ToString("yyyy-MM-dd")" />
+                        </td>
+                        <td>
+                            @Model[i].Slot
+                            <input type="hidden" name="attendances[@i].Slot" value="@Model[i].Slot" />
+                        </td>
+                        <td>
+                            @Model[i].CourseName
+                            <input type="hidden" name="attendances[@i].CourseId" value="@Model[i].CourseId" />
+                        </td>
+                        <td>
+
+                            <div class="form-check">
+                                <input type="radio" name="attendances[@i].Status" value="Attended" class="form-check-input" id="attended-@i"
+                                @(Model[i].Status == Status.Attended ? "checked" : "") />
+                                <label class="form-check-label" for="attended-@i">Attended</label>
+                            </div>
+                            <div class="form-check">
+                                <input type="radio" name="attendances[@i].Status" value="Absent" class="form-check-input" id="absent-@i"
+                                @(Model[i].Status == Status.Absent ? "checked" : "") />
+                                <label class="form-check-label" for="absent-@i">Absent</label>
+                            </div>
+                            <div class="form-check">
+                                <input type="radio" name="attendances[@i].Status" value="" class="form-check-input" id="notyet-@i"
+                                @(Model[i].Status == Status.NotYet ? "checked" : "") hidden />
+                            </div>
+                        </td>
+                        <td>
+                            @Model[i].TeacherName
+                            <input type="hidden" name="attendances[@i].TeacherName" value="@Model[i].TeacherName" />
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <button type="submit" class="btn btn-primary">Update</button>
+    </form>
+}

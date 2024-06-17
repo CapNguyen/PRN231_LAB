@@ -1,0 +1,28 @@
+﻿@model List<Schedule>
+<h1>Student Timetable</h1>
+<h2>Student Name: @Model[0].StudentName</h2>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Date</th>
+            <th>Slot</th>
+            <th>Course Name</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var schedule in Model)
+        {
+            <tr>
+                <td>@schedule.Date.ToString("yyyy-MM-dd")</td>
+                <td>@schedule.Slot</td>
+                <td>@schedule.CourseName</td>
+                <td>
+                <span style="color: @(schedule.Status == Status.Absent ? "red" : schedule.Status == Status.Attended ? "green" : "black");">
+                    @schedule.Status
+                </span>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
