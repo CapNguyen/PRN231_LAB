@@ -59,6 +59,7 @@ namespace ClientApp.Controllers
             var url = ScheduleApiUrl + $"/TakeAttendances";
             HttpResponseMessage response = await client.PostAsJsonAsync(url, attendances);
             var result = response.Content.ReadFromJsonAsync<List<Schedule>>().Result;
+            ViewBag.Status = (response.StatusCode == System.Net.HttpStatusCode.OK) ? "Successful" : "Failed";
             return View(result);
         }
 
