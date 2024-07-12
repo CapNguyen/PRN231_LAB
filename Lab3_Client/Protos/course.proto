@@ -1,0 +1,38 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/wrappers.proto";
+ 
+option csharp_namespace = "Lab3_Client.Protos";
+package course;
+service CourseServices{
+	rpc GetAll(GetAllReq) returns (AllCourse);
+	rpc GetById(GetByIdRequest) returns (CourseObject);
+	rpc GetStudentsInCourse(GetByIdRequest) returns (StudentsInCourse);
+}
+
+message CourseObject{
+	int32 id=1;
+	string courseName=2;
+	google.protobuf.Timestamp startDate=3;
+	string timeSlot=4;
+	string subjectCode=5;
+}
+message StudentObject{
+	int32 id=1;
+	string studentCode=2;
+	string name=3;
+	bool gender=4;
+}
+message AllCourse{
+	repeated CourseObject course = 1;
+}
+message GetByIdRequest{
+	int32 courseId=1;
+}
+message StudentsInCourse{
+	repeated StudentObject students=1;
+}
+message GetAllReq{
+
+}

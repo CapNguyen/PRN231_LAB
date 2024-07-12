@@ -1,0 +1,17 @@
+﻿@page
+@model Lab3_ClientApp.Pages.CourseModel
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Call gRPC service to get course:</p>
+    <form method="post">
+        <input type="number" name="studentId" placeholder="Enter student ID" />
+        <button type="submit">Get Course</button>
+    </form>
+    <ul>
+        @foreach (var c in Model.Courses)
+        {
+            <li>@c.CourseName - @c.StartDate - @c.TimeSlot - @c.SubjectCode</li>
+        }
+    </ul>
+</div>

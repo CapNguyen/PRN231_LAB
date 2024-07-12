@@ -1,0 +1,35 @@
+﻿@page
+@model Lab3_Client.Pages.Student.ScheduleModel
+@{
+}
+<div>
+    <h2>Get Schedules By Course and Slot:</h2>
+    <form method="post">
+        <input type="number" name="courseId" placeholder="Enter course ID" min="0" />
+        <input type="number" name="studentId" placeholder="Enter student ID" min="0" />
+        <button type="submit">Get Schedules</button>
+    </form>
+    <table border="1" style="margin-top:20px">
+        <tr>
+            <th>StudentName</th>
+            <th>CourseName</th>
+            <th>Slot</th>
+            <th>Datetime</th>
+            <th>CourseName</th>
+            <th>TeacherName</th>
+            <th>Status</th>
+        </tr>
+        @foreach (var a in Model.Attendances)
+        {
+            <tr>
+                <td>@a.StudentName</td>
+                <td>@a.CourseName</td>
+                <td>@a.Slot</td>
+                <td>@a.Datetime</td>
+                <td>@a.CourseName</td>
+                <td>@a.TeacherName</td>
+                <td>@a.Status</td>
+            </tr>
+        }
+    </table>
+</div>

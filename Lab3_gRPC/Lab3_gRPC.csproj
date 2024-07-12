@@ -7,7 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Protobuf Include="Protos\greet.proto" GrpcServices="Server" />
+    <Protobuf Include="Protos\schedule.proto" GrpcServices="Server" />
+    <Protobuf Include="Protos\course.proto" GrpcServices="Server" />
   </ItemGroup>
 
   <ItemGroup>
@@ -22,5 +23,5 @@
     </PackageReference>
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.25" />
   </ItemGroup>
-
+	
 </Project>

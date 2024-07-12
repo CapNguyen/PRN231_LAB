@@ -1,5 +1,4 @@
-﻿using Lab_PRN231.Models;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace Lab_PRN231.Models
 {

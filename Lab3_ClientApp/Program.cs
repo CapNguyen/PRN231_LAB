@@ -1,8 +1,16 @@
+using Grpc.Net.Client;
+using Lab3_ClientApp.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
-
+//builder.Services.AddSingleton(provider =>
+//{
+//    var channel = GrpcChannel.ForAddress("https://localhost:5294");
+//    return channel;
+//});
+builder.Services.AddTransient<ICourse,CourseService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -13,7 +21,6 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();

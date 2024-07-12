@@ -137,6 +137,8 @@ namespace Lab_PRN231.Services
             };
             return dto;
         }
+
+
         public async Task<List<ScheduleDTO>> TakeAttendances(List<TakeAttendanceRequest> requests)
         {
             var dtos = new List<ScheduleDTO>();

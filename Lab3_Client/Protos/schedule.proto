@@ -1,0 +1,49 @@
+syntax = "proto3";
+import "google/protobuf/timestamp.proto";
+option csharp_namespace = "Lab3_Client.Protos";
+service ScheduleServices{
+	rpc AttendanceOfStudentInCourse(AttendanceOfStudentInCourseReq) returns (Attendances);
+	rpc AttendancesInCourseBySlot(AttendancesInCourseBySlotReq) returns (Attendances);
+	rpc TakeAttendance(TakeAttendanceReqs) returns (TakeAttendanceResp);
+}
+enum Status
+{
+    NotYet=0;
+    Absent=1;
+    Attended=2; 
+}
+message Attendance{
+	int32 id=1;
+	int32 slot=2;
+	google.protobuf.Timestamp datetime=3;
+	int32 courseId=4;
+	string courseName=5;
+	int32 teacherId=6;
+	string teacherName=7;
+	int32 studentId=8;
+	string studentName=9;
+	Status status=10;
+}
+message TakeAttendanceReq{
+	int32 studentId=1;
+	int32 scheduleId=2;
+	Status Status=3;
+}
+message Attendances{
+	repeated Attendance attendances=1;
+}
+message AttendanceOfStudentInCourseReq{
+	int32 studentId=1;
+	int32 courseId=2;
+}
+message AttendancesInCourseBySlotReq{
+	int32 courseId=1;
+	int32 slotId=2;
+}
+message TakeAttendanceReqs{
+	repeated TakeAttendanceReq request=1;
+}
+message TakeAttendanceResp{
+	string status=1;
+	string message=2;
+}

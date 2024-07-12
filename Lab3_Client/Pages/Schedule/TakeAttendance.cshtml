@@ -1,0 +1,53 @@
+﻿@page "/Schedule/{courseId:int}/{slot:int}"
+@model Lab3_Client.Pages.Schedule.TakeAttendanceModel
+@{
+}
+<h1>Attendances in slot @Model.Slot of course @Model.CourseId</h1>
+<h2>@Model.Status</h2>
+<form method="post">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>No</th>
+                <th>Student Name</th>
+                <th>Date</th>
+                <th>Slot</th>
+                <th>Course</th>
+                <th>Status</th>
+                <th>Teacher</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < Model.Attendances.Count; i++)
+            {
+                <tr>
+                    <input type="hidden" name="AttendanceRequests[@i].ScheduleId" value="@Model.Attendances[i].Id" />
+                    <input type="hidden" name="AttendanceRequests[@i].StudentId" value="@Model.Attendances[i].StudentId" />
+                    <td>@(i + 1)</td>
+                    <td>@Model.Attendances[i].StudentName</td>
+                    <td>@Model.Attendances[i].Datetime.ToDateTime().ToString("yyyy-MM-dd")</td>
+                    <td>@Model.Attendances[i].Slot</td>
+                    <td>@Model.Attendances[i].CourseName</td>
+                    <td>
+                        <div class="form-check">
+                            <input type="radio" name="AttendanceRequests[@i].Status" value="Attended" class="form-check-input" id="attended-@i"
+                            @(Model.Attendances[i].Status == Protos.Status.Attended ? "checked" : "") />
+                            <label class="form-check-label" for="attended-@i">Attended</label>
+                        </div>
+                        <div class="form-check">
+                            <input type="radio" name="AttendanceRequests[@i].Status" value="Absent" class="form-check-input" id="absent-@i"
+                            @(Model.Attendances[i].Status == Protos.Status.Absent ? "checked" : "") />
+                            <label class="form-check-label" for="absent-@i">Absent</label>
+                        </div>
+                        <div class="form-check">
+                            <input type="radio" name="AttendanceRequests[@i].Status" value="NotYet" class="form-check-input" id="notyet-@i"
+                            @(Model.Attendances[i].Status == Protos.Status.NotYet ? "checked" : "") hidden />
+                        </div>
+                    </td>
+                    <td>@Model.Attendances[i].TeacherName</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <button type="submit" class="btn btn-primary">Update</button>
+</form>

@@ -1,0 +1,28 @@
+﻿@page
+@model Lab3_ClientApp.Pages.Course.StudentsInCourseModel
+@{
+}
+<div>
+    <h2>Get students by course:</h2>
+    <form method="post">
+        <input type="number" name="courseId" placeholder="Enter course ID" min="0" />
+        <button type="submit">Get Students</button>
+    </form>
+    <table border="1" style="margin-top:20px">
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>TimeSlot</th>
+            <th>SubjectCode</th>
+        </tr>
+        @foreach (var c in Model.Students)
+        {
+            <tr>
+                <td>@c.Id</td>
+                <td>@c.StudentCode</td>
+                <td>@c.Name</td>
+                <td>@c.Gender</td>
+            </tr>
+        }
+    </table>
+</div>
