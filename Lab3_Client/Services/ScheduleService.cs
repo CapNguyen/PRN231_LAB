@@ -45,5 +45,12 @@ namespace Lab3_Client.Services
 
         }
 
+        public async Task<Attendances> SchedulesByCourse(int courseId)
+        {
+            var request = new SchedulesByCourseReq{ CourseId = courseId };
+            var resp = await client.SchedulesByCourseAsync(request);
+            return resp;
+        }
+
     }
 }

@@ -2,9 +2,10 @@
 @model Lab3_Client.Pages.Schedule.TakeAttendanceModel
 @{
 }
-<h1>Attendances in slot @Model.Slot of course @Model.CourseId</h1>
+<h1>Attendances in course @Model.CourseId of slot @Model.Slot</h1>
 <h2>@Model.Status</h2>
-<form method="post">
+<form></form>
+<form method="post" asp-page-handler="TA">
     <table class="table table-striped">
         <thead>
             <tr>

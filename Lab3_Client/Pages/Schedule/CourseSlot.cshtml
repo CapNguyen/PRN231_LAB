@@ -9,7 +9,8 @@
         <input type="number" name="slot" placeholder="Enter slot" min="0" />
         <button type="submit">Get Schedules</button>
     </form>
-    <table border="1" style="margin-top:20px">
+    <div class="container mt-4">
+        <table class="table table-striped table-bordered" style="margin-top:20px">
         <tr>
             <th>StudentName</th>
             <th>CourseName</th>
@@ -25,11 +26,14 @@
                 <td>@a.StudentName</td>
                 <td>@a.CourseName</td>
                 <td>@a.Slot</td>
-                <td>@a.Datetime</td>
+                <td>@a.Datetime.ToDateTime().ToString("MM/dd/yyyy")</td>
                 <td>@a.CourseName</td>
                 <td>@a.TeacherName</td>
                 <td>@a.Status</td>
             </tr>
         }
     </table>
+    </div>
 </div>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

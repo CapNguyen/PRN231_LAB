@@ -119,8 +119,39 @@ namespace Lab3_gRPC.Services
                 }
             }
             return Task.FromResult(resp);
-            
         }
 
+        public override Task<Attendances> SchedulesByCourse(SchedulesByCourseReq request, ServerCallContext context)
+        {
+            var courseExists = db.Courses.Any(c => c.Id == request.CourseId);
+            if (!courseExists)
+            {
+                return null;
+            }
+
+            var attendances = db.Schedules
+                .Where(s => s.CourseId == request.CourseId)
+                .Include(s => s.Course)
+                .Include(s => s.Teacher)
+                .Include(s => s.StudentSchedules)
+                    .ThenInclude(ss => ss.Student)
+                .SelectMany(s => s.StudentSchedules.Select(ss => new Attendance
+                {
+                    Id = s.Id,
+                    Slot = s.Slot,
+                    Datetime = gRPCConverter.toTimestamp(s.Date),
+                    CourseId = s.CourseId,
+                    CourseName = s.Course.CourseName,
+                    TeacherId = s.TeacherId,
+                    TeacherName = s.Teacher.Name,
+                    Status = gRPCConverter.convertToProtoStatus(ss.Status),
+                    StudentId = ss.StudentId,
+                    StudentName = ss.Student.Name
+                }))
+                .ToList();
+            Attendances resp = new Attendances();
+            resp.Attendances_.Add(attendances);
+            return Task.FromResult(resp);
+        }
     }
 }

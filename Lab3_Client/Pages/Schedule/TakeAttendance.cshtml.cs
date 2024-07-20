@@ -15,7 +15,7 @@ namespace Lab3_Client.Pages.Schedule
         [BindProperty]
         public int Slot { get; set; }
         [BindProperty]
-        public string Status { get; set; }
+        public string? Status { get; set; }
         [BindProperty]
         public List<TakeAttendanceRequest> AttendanceRequests { get; set; } = new List<TakeAttendanceRequest>();
         public TakeAttendanceModel(ISchedule services)
@@ -32,7 +32,7 @@ namespace Lab3_Client.Pages.Schedule
             Attendances.AddRange(updatedResp.Attendances_);
             return Page();
         }
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostTA()
         {
             var resp = await services.TakeAttendance(AttendanceRequests);
             Status = resp.Status;
@@ -42,7 +42,7 @@ namespace Lab3_Client.Pages.Schedule
             Attendances.AddRange(updatedResp.Attendances_);
             return Page();
         }
-
+         //public async Task<IActionResult> OnPostSelect()
 
     }
 }

@@ -5,6 +5,8 @@ service ScheduleServices{
 	rpc AttendanceOfStudentInCourse(AttendanceOfStudentInCourseReq) returns (Attendances);
 	rpc AttendancesInCourseBySlot(AttendancesInCourseBySlotReq) returns (Attendances);
 	rpc TakeAttendance(TakeAttendanceReqs) returns (TakeAttendanceResp);
+	rpc SchedulesByCourse(SchedulesByCourseReq) returns (Attendances);
+
 }
 enum Status
 {
@@ -46,4 +48,7 @@ message TakeAttendanceReqs{
 message TakeAttendanceResp{
 	string status=1;
 	string message=2;
+}
+message SchedulesByCourseReq{
+	int32 courseId=1;
 }
